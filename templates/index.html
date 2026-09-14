@@ -1,0 +1,8 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AquaSucre Técnico</title><link rel="manifest" href="/static/manifest.json"><link rel="stylesheet" href="/static/css/style.css"></head>
+<body><header><h1>AquaSucre</h1><small>Órdenes del técnico</small></header><main>
+<section id="login"><h2>Identificar técnico</h2><select id="tecnico"><option value="">Seleccione...</option></select><button onclick="entrar()">Entrar</button></section>
+<section id="lista" hidden><div class="bar"><h2>Mis órdenes</h2><button class="sec" onclick="salir()">Cambiar técnico</button></div><div id="ordenes"></div></section>
+<section id="detalle" hidden><button class="sec" onclick="volver()">← Volver</button><div id="datos"></div><button id="btnIniciar" onclick="iniciar()">Iniciar trabajo</button>
+<div id="form" hidden><label>Diagnóstico<textarea id="diagnostico"></textarea></label><label>Trabajo realizado<textarea id="trabajo"></textarea></label><label>Observaciones<textarea id="observaciones"></textarea></label><button onclick="guardar()">Guardar</button><button onclick="finalizar()">Finalizar trabajo</button></div></section>
+<p id="msg"></p></main><script src="/static/js/app.js"></script></body></html>

@@ -1,0 +1,1 @@
+const C='aquasucre-v1';const A=['/','/static/css/style.css','/static/js/app.js','/static/manifest.json'];self.addEventListener('install',e=>e.waitUntil(caches.open(C).then(c=>c.addAll(A))));self.addEventListener('fetch',e=>{if(e.request.method==='GET'&&!e.request.url.includes('/api/'))e.respondWith(fetch(e.request).catch(()=>caches.match(e.request)))})
