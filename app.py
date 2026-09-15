@@ -35,7 +35,7 @@ def iniciar(id_ot):
     data=request.get_json(silent=True) or {}
     id_tecnico=data.get('id_tecnico')
     with conexion() as cn, cn.cursor() as cur:
-        cur.execute("""UPDATE ordenes_trabajo SET estado='EN_PROCESO', fecha_inicio=NOW()
+        cur.execute("""UPDATE ordenes_trabajo SET estado='EN_ATENCION', fecha_inicio=NOW()
                        WHERE id_ot=%s AND id_tecnico=%s AND estado='ASIGNADA'
                        RETURNING id_ot,estado,fecha_inicio""", (id_ot,id_tecnico))
         fila=cur.fetchone()
@@ -47,7 +47,7 @@ def reporte(id_ot):
     data=request.get_json(silent=True) or {}
     with conexion() as cn, cn.cursor() as cur:
         cur.execute('''UPDATE ordenes_trabajo SET diagnostico=%s, trabajo_realizado=%s, observaciones=%s
-                       WHERE id_ot=%s AND id_tecnico=%s AND estado='EN_PROCESO' RETURNING id_ot''',
+                       WHERE id_ot=%s AND id_tecnico=%s AND estado='EN_ATENCION' RETURNING id_ot''',
                     (data.get('diagnostico'),data.get('trabajo_realizado'),data.get('observaciones'),id_ot,data.get('id_tecnico')))
         if not cur.fetchone(): return jsonify({'error':'No se pudo guardar'}),409
         cn.commit(); return jsonify({'ok':True})
@@ -58,7 +58,7 @@ def finalizar(id_ot):
     with conexion() as cn, cn.cursor() as cur:
         cur.execute('''UPDATE ordenes_trabajo SET diagnostico=%s, trabajo_realizado=%s, observaciones=%s,
                        estado='FINALIZADA', fecha_finalizacion=NOW()
-                       WHERE id_ot=%s AND id_tecnico=%s AND estado='EN_PROCESO'
+                       WHERE id_ot=%s AND id_tecnico=%s AND estado='EN_ATENCION'
                        RETURNING id_ot,estado,fecha_finalizacion''',
                     (data.get('diagnostico'),data.get('trabajo_realizado'),data.get('observaciones'),id_ot,data.get('id_tecnico')))
         fila=cur.fetchone()
